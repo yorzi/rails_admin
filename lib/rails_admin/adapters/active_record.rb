@@ -224,15 +224,15 @@ module RailsAdmin
           return if value.blank?
           value = case operator
           when 'default', 'like'
-            "%#{value}%"
+            "%#{value.downcase}%"
           when 'starts_with'
-            "#{value}%"
+            "#{value.downcase}%"
           when 'ends_with'
-            "%#{value}"
+            "%#{value.downcase}"
           when 'is', '='
-            "#{value}"
+            "#{value.downcase}"
           end
-          ["(#{column} #{@like_operator} ?)", value]
+          ["(LOWER(#{column}) #{@like_operator} ?)", value]
         when :datetime, :timestamp, :date
           return unless operator != 'default'
           values = case operator
