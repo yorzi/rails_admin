@@ -231,6 +231,18 @@ module RailsAdmin
             "%#{value.downcase}"
           when 'is', '='
             "#{value.downcase}"
+          else
+            return
+          end
+          ["(LOWER(#{column}) #{like_operator} ?)", value]
+        when :date
+          start_date, end_date = get_filtering_duration(operator, value)
+          if start_date && end_date
+            ["(#{column} BETWEEN ? AND ?)", start_date, end_date]
+          elsif start_date
+            ["(#{column} >= ?)", start_date]
+          elsif end_date
+            ["(#{column} <= ?)", end_date]
           end
           ["(LOWER(#{column}) #{@like_operator} ?)", value]
         when :datetime, :timestamp, :date
