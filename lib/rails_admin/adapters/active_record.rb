@@ -234,7 +234,7 @@ module RailsAdmin
           else
             return
           end
-          ["(LOWER(#{column}) #{like_operator} ?)", value]
+          ["(LOWER(#{column}) #{@like_operator} ?)", value]
         when :date
           start_date, end_date = get_filtering_duration(operator, value)
           if start_date && end_date
