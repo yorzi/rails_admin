@@ -48,7 +48,7 @@ module RailsAdmin
       # else
       #   encoding
       # end
-      @encoding_from = UTF8_ENCODINGS.include?(@abstract_model.encoding) ? 'UTF-8' : @abstract_model.encoding
+      @encoding_from = UTF8_ENCODINGS.include?(encoding = Rails.configuration.database_configuration[Rails.env]['encoding']) ? 'UTF-8' : encoding
 
       unless options[:encoding_to].blank?
         @encoding_to = options[:encoding_to]
